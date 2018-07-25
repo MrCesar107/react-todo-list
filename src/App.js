@@ -5,11 +5,29 @@ import TodoBox from './components/TodoBox';
 import TodoList from './components/TodoList';
 
 class App extends Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      todoItems: []
+    }
+
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  onSubmit(e) {
+    let todoListValue = this.refs.todobox.getInputValue();
+    let newListItemValue = this.state.todoItems.concat(todoListValue);
+    this.setState( { todoItems: newListItemValue } );
+  }
+
   render() {
     return (
       <div className="App">
-        <TodoBox/>
-        <TodoList/>
+        <h1 className="App-title">Mi primer Todo List</h1>
+        <TodoBox ref="todobox" onSubmit={this.onSubmit}/>
+        <TodoList ref="todolist" items={ this.state.todoItems }/>
       </div>
     );
   }
